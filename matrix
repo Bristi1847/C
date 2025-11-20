@@ -1,0 +1,72 @@
+#include <stdio.h>
+
+
+void inputMatrix(int rows, int cols, int matrix[rows][cols]) {
+    printf("Enter elements of the matrix (%d rows x %d columns):\n", rows, cols);
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            
+            printf("Enter element at position [%d][%d]: ", i + 1, j + 1);
+
+            if (scanf("%d", &matrix[i][j]) != 1) {
+                printf("Invalid input. Exiting.\n");
+              
+                return;
+            }
+        }
+    }
+}
+
+
+void printMatrix(int rows, int cols, int matrix[rows][cols]) {
+    printf("\n--- The Matrix ---\n");
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+         
+            printf("%4d ", matrix[i][j]); 
+        }
+       
+        printf("\n");
+    }
+    printf("------------------\n");
+}
+
+int main() {
+    // Define the maximum dimensions for the matrix
+    // Note: In C99 and later, Variable-Length Arrays (VLA) are allowed,
+    // which lets us use variables for array sizes, as done below.
+    int rows, cols;
+
+    printf("Welcome to the C Matrix Program!\n");
+
+    // 1. Get dimensions from the user
+    printf("Enter the number of rows: ");
+    if (scanf("%d", &rows) != 1 || rows <= 0) {
+        printf("Invalid row count. Must be a positive integer.\n");
+        return 1;
+    }
+
+    printf("Enter the number of columns: ");
+    if (scanf("%d", &cols) != 1 || cols <= 0) {
+        printf("Invalid column count. Must be a positive integer.\n");
+        return 1;
+    }
+
+    // Check if dimensions are too large (optional safety check)
+    if (rows > 10 || cols > 10) {
+        printf("Dimensions too large for this example. Keeping it small!\n");
+        return 1;
+    }
+    
+    // 2. Declare the 2D array (matrix)
+    // The size is dynamically determined by the 'rows' and 'cols' input.
+    int matrix[rows][cols];
+
+    // 3. Input elements
+    inputMatrix(rows, cols, matrix);
+
+    // 4. Print the resulting matrix
+    printMatrix(rows, cols, matrix);
+
+    return 0;
+}
