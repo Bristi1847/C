@@ -1,0 +1,95 @@
+#include <stdio.h>
+#include <stdlib.h> /
+
+
+typedef struct Node {
+    int data;          
+    struct Node *next; 
+} Node;
+
+
+Node *head = NULL;
+
+
+Node* createNode(int data) {
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    if (newNode == NULL) {
+        // Handle memory allocation failure
+        fprintf(stderr, "Memory allocation failed for new node!\n");
+        exit(1); 
+    }
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+
+void insertAtEnd(int data) {
+    Node *newNode = createNode(data);
+    
+    // Case 1: The list is empty
+    if (head == NULL) {
+        head = newNode;
+        return;
+    }
+    
+   
+    Node *current = head;
+    while (current->next != NULL) {
+        current = current->next;
+    }
+    
+ 
+    current->next = newNode;
+}
+
+
+void printList() {
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+    
+    printf("Linked List: ");
+    Node *current = head;
+    while (current != NULL) {
+        printf("%d -> ", current->data);
+        current = current->next;
+    }
+    printf("NULL\n");
+}
+
+
+void freeList() {
+    Node *current = head;
+    Node *next_node;
+    
+    while (current != NULL) {
+        next_node = current->next; // Save pointer to the next node
+        free(current);             // Free the current node
+        current = next_node;       // Move to the next node
+    }
+    head = NULL; // Reset head pointer
+    printf("All nodes freed successfully.\n");
+}
+
+int main() {
+    printf("--- Singly Linked List Implementation ---\n");
+
+    insertAtEnd(10);
+    insertAtEnd(20);
+    insertAtEnd(30);
+    insertAtEnd(40);
+    
+    printList(); // Should print: 10 -> 20 -> 30 -> 40 -> NULL
+
+
+    printf("Inserting 50...\n");
+    insertAtEnd(50);
+    printList();
+    
+
+    freeList();
+    
+    return 0;
+}
